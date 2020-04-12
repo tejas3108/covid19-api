@@ -1,7 +1,7 @@
-package com.tejas.covid19api.dao.impl
+package com.tejas.covid19api.lib.dao.impl
 
 import com.google.cloud.bigquery.TableResult
-import com.tejas.covid19api.dao.BaseDao
+import com.tejas.covid19api.lib.dao.BaseDao
 import com.tejas.covid19api.lib.constants.DatabaseConstants
 import com.tejas.covid19api.lib.manager.BigQueryManager
 import groovy.transform.CompileStatic

@@ -1,4 +1,4 @@
-package com.tejas.covid19api.dao
+package com.tejas.covid19api.lib.dao
 
 import com.google.cloud.bigquery.TableResult
 import groovy.transform.CompileStatic

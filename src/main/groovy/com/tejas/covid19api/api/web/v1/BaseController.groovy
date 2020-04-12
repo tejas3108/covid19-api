@@ -1,5 +1,7 @@
 package com.tejas.covid19api.api.web.v1
 
+import com.tejas.covid19api.api.dto.v1.CaseSummaryResponseDtoV1
+import com.tejas.covid19api.api.mapper.v1.BaseMapper
 import com.tejas.covid19api.lib.service.BaseService
 import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
@@ -17,9 +19,11 @@ class BaseController {
     @Autowired
     BaseService baseService
 
+    @Autowired
+    BaseMapper mapper
 
-    @RequestMapping(value = "deaths", method = RequestMethod.GET, produces = MediaType.TEXT_PLAIN_VALUE)
-    String getTotalDeaths(){
-        return baseService.getTotalDeaths()
+    @RequestMapping(value = "deaths", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    CaseSummaryResponseDtoV1 getTotalDeaths(){
+        return mapper.coreMapper.map(baseService.getTotalDeaths(), CaseSummaryResponseDtoV1)
     }
 }

@@ -2,8 +2,8 @@ package com.tejas.covid19api.lib.service.impl
 
 import com.google.cloud.bigquery.FieldValueList
 import com.google.cloud.bigquery.TableResult
-import com.tejas.covid19api.dao.BaseDao
-import com.tejas.covid19api.lib.manager.BigQueryManager
+import com.tejas.covid19api.domain.CaseSummary
+import com.tejas.covid19api.lib.dao.BaseDao
 import com.tejas.covid19api.lib.service.BaseService
 import groovy.transform.CompileStatic
 import org.springframework.beans.factory.annotation.Autowired
@@ -16,13 +16,14 @@ class BaseServiceImpl implements BaseService {
     BaseDao dao
 
     @Override
-    String getTotalDeaths() {
+    CaseSummary getTotalDeaths() {
+        CaseSummary summary = null
+
         TableResult result = dao.getTotalDeaths()
-        long totalDeathCount
         for (FieldValueList row : result.iterateAll()) {
-            totalDeathCount = row.get("total_deaths").getLongValue()
+            summary = new CaseSummary(deaths: row.get("total_deaths").getLongValue())
         }
 
-        return String.valueOf(totalDeathCount)
+        return summary
     }
 }

@@ -17,7 +17,6 @@ class BigQueryManagerImpl implements BigQueryManager {
     BigQuery query
 
     BigQueryManagerImpl() {
-        System.out.println("in big query constructor")
         //this will initialize the bigQuery instance from the default JSON file from GCP
         query = BigQueryOptions.getDefaultInstance().getService()
     }
