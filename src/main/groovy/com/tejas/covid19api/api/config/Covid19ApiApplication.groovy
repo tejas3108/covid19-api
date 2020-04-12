@@ -8,6 +8,7 @@ class Covid19ApiApplication {
 
 	static void main(String[] args) {
 		SpringApplication.run(Covid19ApiApplication, args)
+
 	}
 
 }
