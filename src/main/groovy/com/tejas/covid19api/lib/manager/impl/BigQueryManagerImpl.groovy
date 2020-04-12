@@ -22,18 +22,21 @@ class BigQueryManagerImpl implements BigQueryManager {
         query = BigQueryOptions.getDefaultInstance().getService()
     }
 
+    @Override
     QueryJobConfiguration getQueryJobConfiguration(String sqlText) {
         return QueryJobConfiguration.newBuilder(sqlText)
                 .setUseLegacySql(false)
                 .build()
     }
 
+    @Override
     Job getQueryJob(QueryJobConfiguration queryConfig) {
         // Create a job ID so that we can safely retry.
         JobId jobId = JobId.of(UUID.randomUUID().toString())
         return query.create(JobInfo.newBuilder(queryConfig).setJobId(jobId).build())
     }
 
+    @Override
     void handleErrors(Job queryJob) {
         // Check for errors
         if (queryJob == null) {
@@ -45,6 +48,7 @@ class BigQueryManagerImpl implements BigQueryManager {
         }
     }
 
+    @Override
     TableResult runBigQuery(String sqlText) throws RuntimeException {
         QueryJobConfiguration queryConfig = getQueryJobConfiguration(sqlText)
         Job queryJob = getQueryJob(queryConfig)
