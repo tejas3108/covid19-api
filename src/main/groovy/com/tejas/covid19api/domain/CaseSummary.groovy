@@ -3,7 +3,7 @@ package com.tejas.covid19api.domain
 class CaseSummary {
     String provinceState
     String countryRegion
-    Date date
+    String date
     Float latitude
     Float longitude
     Long confirmed

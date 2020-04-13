@@ -4,6 +4,10 @@ import com.google.cloud.bigquery.TableResult
 import groovy.transform.CompileStatic
 
 @CompileStatic
-interface BaseDao {
+interface DeathCaseDao {
     TableResult getTotalDeaths()
+
+    TableResult getDeathsByCountry(String countryName)
+
+    TableResult getDeathGrowthByCountry(String countryName)
 }
