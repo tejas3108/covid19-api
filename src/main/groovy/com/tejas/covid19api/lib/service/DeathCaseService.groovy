@@ -7,7 +7,9 @@ interface DeathCaseService {
 
     CaseSummary getDeathsByCountry(String countryName)
 
+    CaseSummary getTotalDeathsTillDate(String date)
+
     List<CaseSummary> getDeathGrowthByCountry(String countryName)
 
-    CaseSummary getDeathsTillDate(String countryName, String date)
+    CaseSummary getDeathsTillDateByCountry(String countryName, String date)
 }

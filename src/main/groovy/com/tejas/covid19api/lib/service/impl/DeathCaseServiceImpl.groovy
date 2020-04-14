@@ -58,21 +58,36 @@ class DeathCaseServiceImpl implements DeathCaseService {
         return growthList
     }
 
-    @Override
-    CaseSummary getDeathsTillDate(String countryName, String date) {
+    CaseSummary getTotalDeathsTillDate(String date) {
         validateDate(date)
         CaseSummary deathsTillDate = null
 
-        TableResult result = dao.getDeathsTillDate(countryName.toUpperCase(), date)
+        TableResult result = dao.getTotalDeathsTillDate(date)
         for (FieldValueList row : result.iterateAll()) {
             deathsTillDate = new CaseSummary(
+                    deaths: row.get("deaths_till_date")?.getLongValue(),
+                    date: date
+            )
+        }
+
+        return deathsTillDate
+    }
+
+    @Override
+    CaseSummary getDeathsTillDateByCountry(String countryName, String date) {
+        validateDate(date)
+        CaseSummary deathsTillDateByCountry = null
+
+        TableResult result = dao.getDeathsTillDateByCountry(countryName.toUpperCase(), date)
+        for (FieldValueList row : result.iterateAll()) {
+            deathsTillDateByCountry = new CaseSummary(
                     deaths: row.get("deaths_till_date")?.getLongValue(),
                     countryRegion: countryName.toUpperCase(),
                     date: date
             )
         }
 
-        return deathsTillDate
+        return deathsTillDateByCountry
     }
 
     private validateDate(String date) {

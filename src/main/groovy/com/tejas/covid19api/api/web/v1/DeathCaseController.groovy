@@ -35,6 +35,14 @@ class DeathCaseController {
         return mapper.coreMapper.map(deathCaseService.getDeathsByCountry(countryName), CaseSummaryResponseDtoV1)
     }
 
+    @RequestMapping(value = "date/{date}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    CaseSummaryResponseDtoV1 getTotalDeathsByDate(
+            @PathVariable String date
+    ){
+        return mapper.coreMapper.map(deathCaseService.getTotalDeathsTillDate(date), CaseSummaryResponseDtoV1)
+    }
+
+
     @RequestMapping(value = "country/{countryName}/growth", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     List<CaseSummaryResponseDtoV1> getDeathGrowthByCountry(
             @PathVariable String countryName
@@ -47,6 +55,6 @@ class DeathCaseController {
             @PathVariable String countryName,
             @PathVariable String date
     ){
-        return mapper.coreMapper.map(deathCaseService.getDeathsTillDate(countryName, date), CaseSummaryResponseDtoV1)
+        return mapper.coreMapper.map(deathCaseService.getDeathsTillDateByCountry(countryName, date), CaseSummaryResponseDtoV1)
     }
 }

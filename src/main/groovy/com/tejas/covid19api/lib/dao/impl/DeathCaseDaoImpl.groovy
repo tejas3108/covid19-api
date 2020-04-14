@@ -31,9 +31,17 @@ class DeathCaseDaoImpl implements DeathCaseDao{
     }
 
     @Override
-    TableResult getDeathsTillDate(String countryName, String date) {
+    TableResult getDeathsTillDateByCountry(String countryName, String date) {
         StringBuilder sqlText = new StringBuilder("SELECT SUM(deaths) AS deaths_till_date FROM ${DatabaseConstants.DB_NAME}.${DatabaseConstants.SUMMARY_TABLE} ")
                 .append("WHERE UPPER(country_region) = '${countryName}' AND date = '${date}';")
+
+        return queryManager.runBigQuery(sqlText.toString())
+    }
+
+    @Override
+    TableResult getTotalDeathsTillDate(String date) {
+        StringBuilder sqlText = new StringBuilder("SELECT SUM(deaths) AS deaths_till_date FROM ${DatabaseConstants.DB_NAME}.${DatabaseConstants.SUMMARY_TABLE} ")
+                .append("WHERE date = '${date}';")
 
         return queryManager.runBigQuery(sqlText.toString())
     }
