@@ -18,27 +18,35 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/covid19/v1/deaths")
 class DeathCaseController {
     @Autowired
-    DeathCaseService baseService
+    DeathCaseService deathCaseService
 
     @Autowired
     DeathCaseMapper mapper
 
     @RequestMapping(value = "total", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     CaseSummaryResponseDtoV1 getTotalDeaths(){
-        return mapper.coreMapper.map(baseService.getTotalDeaths(), CaseSummaryResponseDtoV1)
+        return mapper.coreMapper.map(deathCaseService.getTotalDeaths(), CaseSummaryResponseDtoV1)
     }
 
     @RequestMapping(value = "country/{countryName}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     CaseSummaryResponseDtoV1 getTotalDeathsByCountry(
             @PathVariable String countryName
     ){
-        return mapper.coreMapper.map(baseService.getDeathsByCountry(countryName), CaseSummaryResponseDtoV1)
+        return mapper.coreMapper.map(deathCaseService.getDeathsByCountry(countryName), CaseSummaryResponseDtoV1)
     }
 
     @RequestMapping(value = "country/{countryName}/growth", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     List<CaseSummaryResponseDtoV1> getDeathGrowthByCountry(
             @PathVariable String countryName
     ){
-        return mapper.mapDomainListToDto(baseService.getDeathGrowthByCountry(countryName))
+        return mapper.mapDomainListToDto(deathCaseService.getDeathGrowthByCountry(countryName))
+    }
+
+    @RequestMapping(value = "country/{countryName}/date/{date}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    CaseSummaryResponseDtoV1 getDeathsTillDateByCountry(
+            @PathVariable String countryName,
+            @PathVariable String date
+    ){
+        return mapper.coreMapper.map(deathCaseService.getDeathsTillDate(countryName, date), CaseSummaryResponseDtoV1)
     }
 }

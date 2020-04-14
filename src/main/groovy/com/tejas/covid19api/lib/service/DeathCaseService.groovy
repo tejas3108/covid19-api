@@ -8,4 +8,6 @@ interface DeathCaseService {
     CaseSummary getDeathsByCountry(String countryName)
 
     List<CaseSummary> getDeathGrowthByCountry(String countryName)
+
+    CaseSummary getDeathsTillDate(String countryName, String date)
 }

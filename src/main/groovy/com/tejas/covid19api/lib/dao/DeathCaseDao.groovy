@@ -10,4 +10,6 @@ interface DeathCaseDao {
     TableResult getDeathsByCountry(String countryName)
 
     TableResult getDeathGrowthByCountry(String countryName)
+
+    TableResult getDeathsTillDate(String countryName, String date)
 }
