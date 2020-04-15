@@ -17,7 +17,7 @@ class DeathCaseDaoImpl implements DeathCaseDao{
     @Override
     TableResult getTotalDeaths() {
         StringBuilder sqlText = new StringBuilder("SELECT SUM(deaths) AS total_deaths FROM ${DatabaseConstants.DB_NAME}.${DatabaseConstants.SUMMARY_TABLE} ")
-                .append("WHERE ${DatabaseConstants.latestDateQueryString} ")
+                .append("WHERE ${DatabaseConstants.LATEST_DATE_QUERY_STRING} ")
                 .append("HAVING SUM(deaths) IS NOT NULL;")
 
         return queryManager.runBigQuery(sqlText.toString())
@@ -26,7 +26,7 @@ class DeathCaseDaoImpl implements DeathCaseDao{
     @Override
     TableResult getDeathsByCountry(String countryName) {
         StringBuilder sqlText = new StringBuilder("SELECT SUM(deaths) AS total_deaths_country FROM ${DatabaseConstants.DB_NAME}.${DatabaseConstants.SUMMARY_TABLE} ")
-                .append("WHERE UPPER(country_region) = '${countryName}' AND ${DatabaseConstants.latestDateQueryString} ")
+                .append("WHERE UPPER(country_region) = '${countryName}' AND ${DatabaseConstants.LATEST_DATE_QUERY_STRING} ")
                 .append("HAVING SUM(deaths) IS NOT NULL;")
 
         return queryManager.runBigQuery(sqlText.toString())
