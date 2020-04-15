@@ -4,6 +4,8 @@ import com.google.cloud.bigquery.FieldValueList
 import com.google.cloud.bigquery.TableResult
 import com.tejas.covid19api.domain.CaseSummary
 import com.tejas.covid19api.lib.dao.DeathCaseDao
+import com.tejas.covid19api.lib.exception.NotFoundException
+import com.tejas.covid19api.lib.exception.ValidationException
 import com.tejas.covid19api.lib.service.DeathCaseService
 import com.tejas.covid19api.lib.util.DateUtil
 import groovy.transform.CompileStatic
@@ -21,11 +23,15 @@ class DeathCaseServiceImpl implements DeathCaseService {
         CaseSummary summary = null
 
         TableResult result = dao.getTotalDeaths()
-        for (FieldValueList row : result.iterateAll()) {
-            summary = new CaseSummary(deaths: row.get("total_deaths")?.getLongValue())
+        if(result.totalRows > 0) {
+            for (FieldValueList row : result.iterateAll()) {
+                summary = new CaseSummary(deaths: row.get("total_deaths")?.getLongValue())
+            }
+
+            return summary
         }
 
-        return summary
+        throw new NotFoundException('exception.no.data.found')
     }
 
     @Override
@@ -33,14 +39,18 @@ class DeathCaseServiceImpl implements DeathCaseService {
         CaseSummary summaryByCountry = null
 
         TableResult result = dao.getDeathsByCountry(countryName.toUpperCase())
-        for (FieldValueList row : result.iterateAll()) {
-            summaryByCountry = new CaseSummary(
-                    deaths: row.get("total_deaths_country")?.getLongValue(),
-                    countryRegion: countryName.toUpperCase()
-            )
+        if(result.totalRows > 0) {
+            for (FieldValueList row : result.iterateAll()) {
+                summaryByCountry = new CaseSummary(
+                        deaths: row.get("total_deaths_country")?.getLongValue(),
+                        countryRegion: countryName.toUpperCase()
+                )
+            }
+
+            return summaryByCountry
         }
 
-        return summaryByCountry
+        throw new NotFoundException('exception.no.data.found')
     }
 
     @Override
@@ -48,14 +58,18 @@ class DeathCaseServiceImpl implements DeathCaseService {
         List<CaseSummary> growthList = new ArrayList<>()
 
         TableResult result = dao.getDeathGrowthByCountry(countryName.toUpperCase())
-        for (FieldValueList row : result.iterateAll()) {
-            growthList << new CaseSummary(
-                    deaths: row.get("country_deaths_growth").getLongValue(),
-                    date: row.get("date")?.getStringValue()
-            )
+        if(result.totalRows > 0) {
+            for (FieldValueList row : result.iterateAll()) {
+                growthList << new CaseSummary(
+                        deaths: row.get("country_deaths_growth").getLongValue(),
+                        date: row.get("date")?.getStringValue()
+                )
+            }
+
+            return growthList
         }
 
-        return growthList
+        throw new NotFoundException('exception.no.data.found')
     }
 
     CaseSummary getTotalDeathsTillDate(String date) {
@@ -63,14 +77,18 @@ class DeathCaseServiceImpl implements DeathCaseService {
         CaseSummary deathsTillDate = null
 
         TableResult result = dao.getTotalDeathsTillDate(date)
-        for (FieldValueList row : result.iterateAll()) {
-            deathsTillDate = new CaseSummary(
-                    deaths: row.get("deaths_till_date")?.getLongValue(),
-                    date: date
-            )
+        if(result.totalRows > 0) {
+            for (FieldValueList row : result.iterateAll()) {
+                deathsTillDate = new CaseSummary(
+                        deaths: row.get("deaths_till_date")?.getLongValue(),
+                        date: date
+                )
+            }
+
+            return deathsTillDate
         }
 
-        return deathsTillDate
+        throw new NotFoundException('exception.no.data.found')
     }
 
     @Override
@@ -79,19 +97,28 @@ class DeathCaseServiceImpl implements DeathCaseService {
         CaseSummary deathsTillDateByCountry = null
 
         TableResult result = dao.getDeathsTillDateByCountry(countryName.toUpperCase(), date)
-        for (FieldValueList row : result.iterateAll()) {
-            deathsTillDateByCountry = new CaseSummary(
-                    deaths: row.get("deaths_till_date")?.getLongValue(),
-                    countryRegion: countryName.toUpperCase(),
-                    date: date
-            )
+        if(result.totalRows > 0) {
+            for (FieldValueList row : result.iterateAll()) {
+                deathsTillDateByCountry = new CaseSummary(
+                        deaths: row.get("deaths_till_date")?.getLongValue(),
+                        countryRegion: countryName.toUpperCase(),
+                        date: date
+                )
+            }
+
+            return deathsTillDateByCountry
         }
 
-        return deathsTillDateByCountry
+        throw new NotFoundException('exception.no.data.found')
     }
 
     private validateDate(String date) {
-        DateUtil.convertToDateTime(date)
+        try {
+            DateUtil.convertToDateTime(date)
+        }
+        catch (Exception e) {
+            throw new ValidationException('exception.invalid.date')
+        }
     }
 
 }

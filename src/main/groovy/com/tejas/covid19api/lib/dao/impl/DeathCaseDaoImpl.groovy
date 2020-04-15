@@ -17,7 +17,8 @@ class DeathCaseDaoImpl implements DeathCaseDao{
     @Override
     TableResult getTotalDeaths() {
         StringBuilder sqlText = new StringBuilder("SELECT SUM(deaths) AS total_deaths FROM ${DatabaseConstants.DB_NAME}.${DatabaseConstants.SUMMARY_TABLE} ")
-            .append("WHERE ${DatabaseConstants.latestDateQueryString};")
+                .append("WHERE ${DatabaseConstants.latestDateQueryString} ")
+                .append("HAVING SUM(deaths) IS NOT NULL;")
 
         return queryManager.runBigQuery(sqlText.toString())
     }
@@ -25,7 +26,8 @@ class DeathCaseDaoImpl implements DeathCaseDao{
     @Override
     TableResult getDeathsByCountry(String countryName) {
         StringBuilder sqlText = new StringBuilder("SELECT SUM(deaths) AS total_deaths_country FROM ${DatabaseConstants.DB_NAME}.${DatabaseConstants.SUMMARY_TABLE} ")
-                .append("WHERE UPPER(country_region) = '${countryName}' AND ${DatabaseConstants.latestDateQueryString};")
+                .append("WHERE UPPER(country_region) = '${countryName}' AND ${DatabaseConstants.latestDateQueryString} ")
+                .append("HAVING SUM(deaths) IS NOT NULL;")
 
         return queryManager.runBigQuery(sqlText.toString())
     }
@@ -33,7 +35,8 @@ class DeathCaseDaoImpl implements DeathCaseDao{
     @Override
     TableResult getDeathsTillDateByCountry(String countryName, String date) {
         StringBuilder sqlText = new StringBuilder("SELECT SUM(deaths) AS deaths_till_date FROM ${DatabaseConstants.DB_NAME}.${DatabaseConstants.SUMMARY_TABLE} ")
-                .append("WHERE UPPER(country_region) = '${countryName}' AND date = '${date}';")
+                .append("WHERE UPPER(country_region) = '${countryName}' AND date = '${date}' ")
+                .append("HAVING SUM(deaths) IS NOT NULL;")
 
         return queryManager.runBigQuery(sqlText.toString())
     }
@@ -41,7 +44,8 @@ class DeathCaseDaoImpl implements DeathCaseDao{
     @Override
     TableResult getTotalDeathsTillDate(String date) {
         StringBuilder sqlText = new StringBuilder("SELECT SUM(deaths) AS deaths_till_date FROM ${DatabaseConstants.DB_NAME}.${DatabaseConstants.SUMMARY_TABLE} ")
-                .append("WHERE date = '${date}';")
+                .append("WHERE date = '${date}' ")
+                .append("HAVING SUM(deaths) IS NOT NULL;")
 
         return queryManager.runBigQuery(sqlText.toString())
     }
