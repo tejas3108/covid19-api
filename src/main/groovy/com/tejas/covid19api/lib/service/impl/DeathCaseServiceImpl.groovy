@@ -101,7 +101,6 @@ class DeathCaseServiceImpl implements DeathCaseService {
             for (FieldValueList row : result.iterateAll()) {
                 deathsTillDateByCountry = new CaseSummary(
                         deaths: row.get("deaths_till_date")?.getLongValue(),
-                        countryRegion: countryName.toUpperCase(),
                         date: date
                 )
             }

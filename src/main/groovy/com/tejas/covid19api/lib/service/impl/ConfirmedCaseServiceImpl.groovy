@@ -101,7 +101,6 @@ class ConfirmedCaseServiceImpl implements ConfirmedCaseService{
             for (FieldValueList row : result.iterateAll()) {
                 confirmedTillDateByCountry = new CaseSummary(
                         confirmed: row.get("confirmed_till_date")?.getLongValue(),
-                        countryRegion: countryName.toUpperCase(),
                         date: date
                 )
             }
