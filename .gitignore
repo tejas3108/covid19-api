@@ -36,5 +36,4 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
-johndeere-api-local.log
 /bin/
