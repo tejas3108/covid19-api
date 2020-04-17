@@ -11,5 +11,5 @@ interface BigQueryManager {
 
     void handleErrors(Job queryJob)
 
-    TableResult runBigQuery(String sqlText) throws RuntimeException
+    TableResult runBigQuery(String sqlText)
 }

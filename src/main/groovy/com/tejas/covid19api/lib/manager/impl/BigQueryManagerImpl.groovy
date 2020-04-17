@@ -48,7 +48,7 @@ class BigQueryManagerImpl implements BigQueryManager {
     }
 
     @Override
-    TableResult runBigQuery(String sqlText) throws RuntimeException {
+    TableResult runBigQuery(String sqlText) {
         QueryJobConfiguration queryConfig = getQueryJobConfiguration(sqlText)
         Job queryJob = getQueryJob(queryConfig)
 

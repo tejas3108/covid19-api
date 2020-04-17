@@ -6,6 +6,7 @@ import com.tejas.covid19api.domain.CaseSummary
 import com.tejas.covid19api.lib.dao.DeathCaseDao
 import com.tejas.covid19api.lib.exception.NotFoundException
 import com.tejas.covid19api.lib.exception.ValidationException
+import com.tejas.covid19api.lib.manager.CountryCodeCSVParser
 import com.tejas.covid19api.lib.service.DeathCaseService
 import com.tejas.covid19api.lib.util.DateUtil
 import groovy.transform.CompileStatic
@@ -17,6 +18,9 @@ import org.springframework.stereotype.Service
 class DeathCaseServiceImpl implements DeathCaseService {
     @Autowired
     DeathCaseDao dao
+
+    @Autowired
+    CountryCodeCSVParser countryCodeParser
 
     @Override
     CaseSummary getTotalDeaths() {
@@ -30,46 +34,51 @@ class DeathCaseServiceImpl implements DeathCaseService {
 
             return summary
         }
-
         throw new NotFoundException('exception.no.data.found')
     }
 
     @Override
-    CaseSummary getDeathsByCountry(String countryName) {
+    CaseSummary getDeathsByCountry(String countryCode) {
         CaseSummary summaryByCountry = null
 
-        TableResult result = dao.getDeathsByCountry(countryName.toUpperCase())
-        if(result.totalRows > 0) {
-            for (FieldValueList row : result.iterateAll()) {
-                summaryByCountry = new CaseSummary(
-                        deaths: row.get("total_deaths_country")?.getLongValue(),
-                        countryRegion: countryName.toUpperCase()
-                )
+        String countryName = countryCodeParser.getCodeMap().get(countryCode)
+        if(countryName) {
+            TableResult result = dao.getDeathsByCountry(countryName.toUpperCase())
+            if(result.totalRows > 0) {
+                for (FieldValueList row : result.iterateAll()) {
+                    summaryByCountry = new CaseSummary(
+                            deaths: row.get("total_deaths_country")?.getLongValue(),
+                            countryRegion: countryName.toUpperCase()
+                    )
+                }
+
+                return summaryByCountry
             }
-
-            return summaryByCountry
+            throw new NotFoundException('exception.no.data.found')
         }
-
-        throw new NotFoundException('exception.no.data.found')
+        throw new NotFoundException('exception.invalid.country.code')
     }
 
     @Override
-    List<CaseSummary> getDeathGrowthByCountry(String countryName) {
+    List<CaseSummary> getDeathGrowthByCountry(String countryCode) {
         List<CaseSummary> growthList = new ArrayList<>()
 
-        TableResult result = dao.getDeathGrowthByCountry(countryName.toUpperCase())
-        if(result.totalRows > 0) {
-            for (FieldValueList row : result.iterateAll()) {
-                growthList << new CaseSummary(
-                        deaths: row.get("country_deaths_growth").getLongValue(),
-                        date: row.get("date")?.getStringValue()
-                )
+        String countryName = countryCodeParser.getCodeMap().get(countryCode)
+        if(countryName) {
+            TableResult result = dao.getDeathGrowthByCountry(countryName.toUpperCase())
+            if(result.totalRows > 0) {
+                for (FieldValueList row : result.iterateAll()) {
+                    growthList << new CaseSummary(
+                            deaths: row.get("country_deaths_growth").getLongValue(),
+                            date: row.get("date")?.getStringValue()
+                    )
+                }
+
+                return growthList
             }
-
-            return growthList
+            throw new NotFoundException('exception.no.data.found')
         }
-
-        throw new NotFoundException('exception.no.data.found')
+        throw new NotFoundException('exception.invalid.country.code')
     }
 
     CaseSummary getTotalDeathsTillDate(String date) {
@@ -92,23 +101,26 @@ class DeathCaseServiceImpl implements DeathCaseService {
     }
 
     @Override
-    CaseSummary getDeathsTillDateByCountry(String countryName, String date) {
+    CaseSummary getDeathsTillDateByCountry(String countryCode, String date) {
         validateDate(date)
         CaseSummary deathsTillDateByCountry = null
 
-        TableResult result = dao.getDeathsTillDateByCountry(countryName.toUpperCase(), date)
-        if(result.totalRows > 0) {
-            for (FieldValueList row : result.iterateAll()) {
-                deathsTillDateByCountry = new CaseSummary(
-                        deaths: row.get("deaths_till_date")?.getLongValue(),
-                        date: date
-                )
+        String countryName = countryCodeParser.getCodeMap().get(countryCode)
+        if(countryName) {
+            TableResult result = dao.getDeathsTillDateByCountry(countryName.toUpperCase(), date)
+            if(result.totalRows > 0) {
+                for (FieldValueList row : result.iterateAll()) {
+                    deathsTillDateByCountry = new CaseSummary(
+                            deaths: row.get("deaths_till_date")?.getLongValue(),
+                            date: date
+                    )
+                }
+
+                return deathsTillDateByCountry
             }
-
-            return deathsTillDateByCountry
+            throw new NotFoundException('exception.no.data.found')
         }
-
-        throw new NotFoundException('exception.no.data.found')
+        throw new NotFoundException('exception.invalid.country.code')
     }
 
     private validateDate(String date) {

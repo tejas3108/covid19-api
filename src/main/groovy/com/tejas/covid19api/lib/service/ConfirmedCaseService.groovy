@@ -7,11 +7,11 @@ import groovy.transform.CompileStatic
 interface ConfirmedCaseService {
     CaseSummary getTotalConfirmed()
 
-    CaseSummary getConfirmedByCountry(String countryName)
+    CaseSummary getConfirmedByCountry(String countryCode)
 
     CaseSummary getTotalConfirmedTillDate(String date)
 
-    List<CaseSummary> getConfirmedGrowthByCountry(String countryName)
+    List<CaseSummary> getConfirmedGrowthByCountry(String countryCode)
 
-    CaseSummary getConfirmedTillDateByCountry(String countryName, String date)
+    CaseSummary getConfirmedTillDateByCountry(String countryCode, String date)
 }

@@ -9,4 +9,6 @@ class DatabaseConstants {
     final static String DB_DATE_FORMAT = 'YYYY-MM-DD'
 
     final static String LATEST_DATE_QUERY_STRING = "date = (SELECT MAX(date) FROM ${DB_NAME}.${SUMMARY_TABLE})"
+
+    final static String CSV_FILE = '/tmp/country-codes.csv'
 }

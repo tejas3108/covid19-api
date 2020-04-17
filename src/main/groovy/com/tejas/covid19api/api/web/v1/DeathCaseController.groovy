@@ -50,11 +50,11 @@ class DeathCaseController {
             @ApiResponse(code = 500, message = "Internal Exception")
     ]
     )
-    @RequestMapping(value = "country/{countryName}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "country/{countryCode}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     CaseSummaryResponseDtoV1 getTotalDeathsByCountry(
-            @ApiParam(name = "countryName", value = "Country Name", required = true) @PathVariable(required = true) String countryName
+            @ApiParam(name = "countryCode", value = "Country Code", required = true) @PathVariable(required = true) String countryCode
     ){
-        return mapper.coreMapper.map(deathCaseService.getDeathsByCountry(countryName), CaseSummaryResponseDtoV1)
+        return mapper.coreMapper.map(deathCaseService.getDeathsByCountry(countryCode), CaseSummaryResponseDtoV1)
     }
 
     @ApiOperation(value = "Get count of total deaths by date. Accepted format is YYYY-MM-DD")
@@ -80,11 +80,11 @@ class DeathCaseController {
             @ApiResponse(code = 500, message = "Internal Exception")
     ]
     )
-    @RequestMapping(value = "country/{countryName}/growth", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "country/{countryCode}/growth", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     List<CaseSummaryResponseDtoV1> getDeathGrowthByCountry(
-            @ApiParam(name = "countryName", value = "Country Name", required = true) @PathVariable(required = true) String countryName
+            @ApiParam(name = "countryCode", value = "Country Code", required = true) @PathVariable(required = true) String countryCode
     ){
-        return mapper.mapDomainListToDto(deathCaseService.getDeathGrowthByCountry(countryName))
+        return mapper.mapDomainListToDto(deathCaseService.getDeathGrowthByCountry(countryCode))
     }
 
     @ApiOperation(value = "Get a count of total deaths of a country on a particular date. Accepted format is YYYY-MM-DD")
@@ -95,11 +95,11 @@ class DeathCaseController {
             @ApiResponse(code = 500, message = "Internal Exception")
     ]
     )
-    @RequestMapping(value = "country/{countryName}/date/{date}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "country/{countryCode}/date/{date}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     CaseSummaryResponseDtoV1 getDeathsTillDateByCountry(
-            @ApiParam(name = "countryName", value = "Country Name", required = true) @PathVariable(required = true) String countryName,
+            @ApiParam(name = "countryCode", value = "Country Code", required = true) @PathVariable(required = true) String countryCode,
             @ApiParam(name = "date", value = "Date", required = true) @PathVariable(required = true) String date
     ){
-        return mapper.coreMapper.map(deathCaseService.getDeathsTillDateByCountry(countryName, date), CaseSummaryResponseDtoV1)
+        return mapper.coreMapper.map(deathCaseService.getDeathsTillDateByCountry(countryCode, date), CaseSummaryResponseDtoV1)
     }
 }

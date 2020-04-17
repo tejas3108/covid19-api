@@ -49,11 +49,11 @@ class CaseSummaryController {
             @ApiResponse(code = 500, message = "Internal Exception")
     ]
     )
-    @RequestMapping(value = "country/{countryName}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "country/{countryCode}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     CaseSummaryResponseDtoV1 getTotalSummaryByCountry(
-            @ApiParam(name = "countryName", value = "Country Name", required = true) @PathVariable(required = true) String countryName
+            @ApiParam(name = "countryCode", value = "Country Code", required = true) @PathVariable(required = true) String countryCode
     ) {
-        return mapper.coreMapper.map(caseSummaryService.getSummaryByCountry(countryName), CaseSummaryResponseDtoV1)
+        return mapper.coreMapper.map(caseSummaryService.getSummaryByCountry(countryCode), CaseSummaryResponseDtoV1)
     }
 
     @ApiOperation(value = "Get summary of total confirmed, deaths, and recovered cases by date. Accepted format is YYYY-MM-DD")
@@ -79,11 +79,11 @@ class CaseSummaryController {
             @ApiResponse(code = 500, message = "Internal Exception")
     ]
     )
-    @RequestMapping(value = "country/{countryName}/growth", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "country/{countryCode}/growth", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     List<CaseSummaryResponseDtoV1> getSummaryGrowthByCountry(
-            @ApiParam(name = "countryName", value = "Country Name", required = true) @PathVariable(required = true) String countryName
+            @ApiParam(name = "countryCode", value = "Country Code", required = true) @PathVariable(required = true) String countryCode
     ) {
-        return mapper.mapDomainListToDto(caseSummaryService.getSummaryGrowthByCountry(countryName))
+        return mapper.mapDomainListToDto(caseSummaryService.getSummaryGrowthByCountry(countryCode))
     }
 
     @ApiOperation(value = "Get a summary of total confirmed, deaths, and recovered cases of a country on a particular date. Accepted format is YYYY-MM-DD")
@@ -94,11 +94,11 @@ class CaseSummaryController {
             @ApiResponse(code = 500, message = "Internal Exception")
     ]
     )
-    @RequestMapping(value = "country/{countryName}/date/{date}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "country/{countryCode}/date/{date}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     CaseSummaryResponseDtoV1 getSummaryTillDateByCountry(
-            @ApiParam(name = "countryName", value = "Country Name", required = true) @PathVariable(required = true) String countryName,
+            @ApiParam(name = "countryCode", value = "Country Code", required = true) @PathVariable(required = true) String countryCode,
             @ApiParam(name = "date", value = "Date", required = true) @PathVariable(required = true) String date
     ) {
-        return mapper.coreMapper.map(caseSummaryService.getSummaryTillDateByCountry(countryName, date), CaseSummaryResponseDtoV1)
+        return mapper.coreMapper.map(caseSummaryService.getSummaryTillDateByCountry(countryCode, date), CaseSummaryResponseDtoV1)
     }
 }

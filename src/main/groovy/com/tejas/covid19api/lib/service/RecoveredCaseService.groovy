@@ -7,11 +7,11 @@ import groovy.transform.CompileStatic
 interface RecoveredCaseService {
     CaseSummary getTotalRecovered()
 
-    CaseSummary getRecoveredByCountry(String countryName)
+    CaseSummary getRecoveredByCountry(String countryCode)
 
     CaseSummary getTotalRecoveredTillDate(String date)
 
-    List<CaseSummary> getRecoveredGrowthByCountry(String countryName)
+    List<CaseSummary> getRecoveredGrowthByCountry(String countryCode)
 
-    CaseSummary getRecoveredTillDateByCountry(String countryName, String date)
+    CaseSummary getRecoveredTillDateByCountry(String countryCode, String date)
 }

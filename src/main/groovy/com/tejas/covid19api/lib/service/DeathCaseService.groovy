@@ -5,11 +5,11 @@ import com.tejas.covid19api.domain.CaseSummary
 interface DeathCaseService {
     CaseSummary getTotalDeaths()
 
-    CaseSummary getDeathsByCountry(String countryName)
+    CaseSummary getDeathsByCountry(String countryCode)
 
     CaseSummary getTotalDeathsTillDate(String date)
 
-    List<CaseSummary> getDeathGrowthByCountry(String countryName)
+    List<CaseSummary> getDeathGrowthByCountry(String countryCode)
 
-    CaseSummary getDeathsTillDateByCountry(String countryName, String date)
+    CaseSummary getDeathsTillDateByCountry(String countryCode, String date)
 }

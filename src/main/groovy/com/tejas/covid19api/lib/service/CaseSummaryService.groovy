@@ -7,12 +7,12 @@ import groovy.transform.CompileStatic
 interface CaseSummaryService {
     CaseSummary getTotalSummary()
 
-    CaseSummary getSummaryByCountry(String countryName)
+    CaseSummary getSummaryByCountry(String countryCode)
 
     CaseSummary getTotalSummaryTillDate(String date)
 
-    List<CaseSummary> getSummaryGrowthByCountry(String countryName)
+    List<CaseSummary> getSummaryGrowthByCountry(String countryCode)
 
-    CaseSummary getSummaryTillDateByCountry(String countryName, String date)
+    CaseSummary getSummaryTillDateByCountry(String countryCode, String date)
 
 }

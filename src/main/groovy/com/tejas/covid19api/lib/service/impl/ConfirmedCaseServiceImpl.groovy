@@ -6,6 +6,7 @@ import com.tejas.covid19api.domain.CaseSummary
 import com.tejas.covid19api.lib.dao.ConfirmedCaseDao
 import com.tejas.covid19api.lib.exception.NotFoundException
 import com.tejas.covid19api.lib.exception.ValidationException
+import com.tejas.covid19api.lib.manager.CountryCodeCSVParser
 import com.tejas.covid19api.lib.service.ConfirmedCaseService
 import com.tejas.covid19api.lib.util.DateUtil
 import groovy.transform.CompileStatic
@@ -17,7 +18,10 @@ import org.springframework.stereotype.Service
 class ConfirmedCaseServiceImpl implements ConfirmedCaseService{
     @Autowired
     ConfirmedCaseDao dao
-    
+
+    @Autowired
+    CountryCodeCSVParser countryCodeParser
+
     @Override
     CaseSummary getTotalConfirmed() {
         CaseSummary summary = null
@@ -30,46 +34,50 @@ class ConfirmedCaseServiceImpl implements ConfirmedCaseService{
 
             return summary
         }
-
         throw new NotFoundException('exception.no.data.found')
     }
 
     @Override
-    CaseSummary getConfirmedByCountry(String countryName) {
+    CaseSummary getConfirmedByCountry(String countryCode) {
         CaseSummary summaryByCountry = null
 
-        TableResult result = dao.getConfirmedByCountry(countryName.toUpperCase())
-        if(result.totalRows > 0) {
-            for (FieldValueList row : result.iterateAll()) {
-                summaryByCountry = new CaseSummary(
-                        confirmed: row.get("total_confirmed_country")?.getLongValue(),
-                        countryRegion: countryName.toUpperCase()
-                )
+        String countryName = countryCodeParser.getCodeMap().get(countryCode)
+        if(countryName) {
+            TableResult result = dao.getConfirmedByCountry(countryName.toUpperCase())
+            if(result.totalRows > 0) {
+                for (FieldValueList row : result.iterateAll()) {
+                    summaryByCountry = new CaseSummary(
+                            confirmed: row.get("total_confirmed_country")?.getLongValue(),
+                            countryRegion: countryName.toUpperCase()
+                    )
+                }
+                return summaryByCountry
             }
-
-            return summaryByCountry
+            throw new NotFoundException('exception.no.data.found')
         }
-
-        throw new NotFoundException('exception.no.data.found')
+        throw new NotFoundException('exception.invalid.country.code')
     }
 
     @Override
-    List<CaseSummary> getConfirmedGrowthByCountry(String countryName) {
+    List<CaseSummary> getConfirmedGrowthByCountry(String countryCode) {
         List<CaseSummary> growthList = new ArrayList<>()
 
-        TableResult result = dao.getConfirmedGrowthByCountry(countryName.toUpperCase())
-        if(result.totalRows > 0) {
-            for (FieldValueList row : result.iterateAll()) {
-                growthList << new CaseSummary(
-                        confirmed: row.get("country_confirmed_growth").getLongValue(),
-                        date: row.get("date")?.getStringValue()
-                )
+        String countryName = countryCodeParser.getCodeMap().get(countryCode)
+        if(countryName) {
+            TableResult result = dao.getConfirmedGrowthByCountry(countryName.toUpperCase())
+            if(result.totalRows > 0) {
+                for (FieldValueList row : result.iterateAll()) {
+                    growthList << new CaseSummary(
+                            confirmed: row.get("country_confirmed_growth").getLongValue(),
+                            date: row.get("date")?.getStringValue()
+                    )
+                }
+
+                return growthList
             }
-
-            return growthList
+            throw new NotFoundException('exception.no.data.found')
         }
-
-        throw new NotFoundException('exception.no.data.found')
+        throw new NotFoundException('exception.invalid.country.code')
     }
 
     CaseSummary getTotalConfirmedTillDate(String date) {
@@ -87,28 +95,30 @@ class ConfirmedCaseServiceImpl implements ConfirmedCaseService{
 
             return confirmedTillDate
         }
-
         throw new NotFoundException('exception.no.data.found')
     }
 
     @Override
-    CaseSummary getConfirmedTillDateByCountry(String countryName, String date) {
+    CaseSummary getConfirmedTillDateByCountry(String countryCode, String date) {
         validateDate(date)
         CaseSummary confirmedTillDateByCountry = null
 
-        TableResult result = dao.getConfirmedTillDateByCountry(countryName.toUpperCase(), date)
-        if(result.totalRows > 0) {
-            for (FieldValueList row : result.iterateAll()) {
-                confirmedTillDateByCountry = new CaseSummary(
-                        confirmed: row.get("confirmed_till_date")?.getLongValue(),
-                        date: date
-                )
+        String countryName = countryCodeParser.getCodeMap().get(countryCode)
+        if(countryName) {
+            TableResult result = dao.getConfirmedTillDateByCountry(countryName.toUpperCase(), date)
+            if(result.totalRows > 0) {
+                for (FieldValueList row : result.iterateAll()) {
+                    confirmedTillDateByCountry = new CaseSummary(
+                            confirmed: row.get("confirmed_till_date")?.getLongValue(),
+                            date: date
+                    )
+                }
+
+                return confirmedTillDateByCountry
             }
-
-            return confirmedTillDateByCountry
+            throw new NotFoundException('exception.no.data.found')
         }
-
-        throw new NotFoundException('exception.no.data.found')
+        throw new NotFoundException('exception.invalid.country.code')
     }
 
     private validateDate(String date) {

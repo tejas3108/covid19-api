@@ -26,7 +26,7 @@ Benin,BEN
 Bermuda,BMU
 Bhutan,BTN
 Bolivia,BOL
-"Bonaire, Sint Eustatius and Saba",BES
+Bonaire,BES
 Bosnia and Herzegovina,BIH
 Botswana,BWA
 Bouvet Island,BVT
@@ -118,7 +118,7 @@ Kazakhstan,KAZ
 Kenya,KEN
 Kiribati,KIR
 Korea (Democratic People's Republic of),PRK
-"Korea, South",KOR
+Korea, South,KOR
 Kuwait,KWT
 Kyrgyzstan,KGZ
 Laos,LAO
@@ -187,7 +187,7 @@ Romania,ROU
 Russian Federation,RUS
 Rwanda,RWA
 Saint Barthelemy,BLM
-"Saint Helena, Ascension and Tristan da Cunha",SHN
+Saint Helena, Ascension and Tristan da Cunha,SHN
 Saint Kitts and Nevis,KNA
 Saint Lucia,LCA
 St. Martin,MAF
@@ -218,9 +218,9 @@ Svalbard and Jan Mayen,SJM
 Sweden,SWE
 Switzerland,CHE
 Syria,SYR
-"Taiwan, Province of China",TWN
+Taiwan,TWN
 Tajikistan,TJK
-"Tanzania, United Republic of",TZA
+Tanzania,TZA
 Thailand,THA
 Timor-Leste,TLS
 Togo,TGO
