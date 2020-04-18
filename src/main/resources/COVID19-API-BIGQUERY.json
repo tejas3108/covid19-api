@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "covid19-api-273823",
+  "private_key_id": "87db52baa03a955a138e02470be6d824d81d7c71",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCTjQERn7rFsroZ\nqQlcfqmWYP9RaQvHMYvOcmty6GPWMTqLWg/qlwfgL/PstWLeZhVqtlX/3bofF+7S\nbR2EXJz9KA0ACjIvu0U32BSDXVXGhCnyl8oXV1DSmBrmyp0dfIcxHxisp57BTOHh\nqXhNcvTTkMRTClFu+tFchQqPUB2kpwbDGxIuvDqk+gplg3+cE3Bj+HY69zdLNARg\nCi6TtZ9kvssI0ZYPhfzf3mbj9BDM9FM2jT7QDmL5OA6x7mUplVQw/T8bzbIYGcDs\nRx6foeemA1ZCB/mrMAGIDj3j232brKKHplMa7A9tcRJLWEU9OQnUJhDQKcW2b8Jf\n+8LQYTShAgMBAAECggEAAuJRsAeAPhcFPjUooq8zH2Zb9zpnaYhVZD6mTQOv1+L0\ncv7aqsoy9DXbvbe57ADw0DoqKisqVStBlsldN1YcF3Kt9l88peQyMSo/FGZBo/S3\nYS+IWrZxNPyWIga51Xa2qcYi1FUebEbVb3TBjjn+ARimTb045ENwzi8niq+VNL+r\nbf+SCv7VI8OK3GuEXkZKdLEQJG99Iv9xVhc8ZTJK5yJKUqlm2stu3rSMf9bx1LKc\nqHtxdTbd+RDN4PM/OQ8aRb7eGSJUzsPuwymcnHv4pnpQiEisV//kJrT4pRH2Dg+i\n8vTLAKg+4R9GohEfKjGk0PqolZAAdOoICdR8Gkk0RQKBgQDLpdVS5bQEa5JtuNjv\nxiY1awnwtAt/QfUgEmzMbc4e1MpOIb0DUO3BdVfJ2h8joJQIUSRIUjQnOt/YBAsQ\nCwexEz+VHntrG7Khj0UD/ykFHiHdmj5e9LdNePMdNQSMkhN8TE/ByJoCAR8VVx7G\nDUrRgCrT5wLVZ669pjuWnAgkrwKBgQC5e2YdGUtVFLJtt/tXUkw1x6qbnC2Nkmww\niXQeUIiOd1XroDDZDOA+L7Aj2vrDRxEVUbSEDK0H/1agPvMV6FSdjQajZPRcv+bq\nyQyKhS1RJ5AiAOB2AcQDrVubYPqwSJxYRi5oQ3uDQewd3BetSb+nhD+r+tIzeNLQ\nZOmNxiwvrwKBgG8HjAX1TK94Qs5lkIkxvFU1dabxUq9gM5f306+lUlLG60Gr7VRo\nhCgMpP9dV8rh2rOqIaD4iIy28aHhmnJ1wQzPFMRlaR6dbEffR96E+EVdB1O9q7Gz\ntFidz9aluEQ3xD3pkTZy+1yKZfsJk7KhPqB4Q2Fius3FCKVHg4d6rInrAoGAJylL\npQcrJZqKFapLseMZXh17AwHViFeK6jCLSL8+Jb5CcM5QofMbAWY2LUvVuBcwHy0y\nDNNUUSTzGEBSOKTmAKG+7g6pnU+TJK0wLaryp3jP8K34tlGnHhOjDMpMA55BDE49\nDBx7XnozrRZEFX1Frsu4WcpKST3QXNmBikJ2H9cCgYBsdUMf1+K3Zkqhh67svoBs\nhZ/6MZ+RwjZ73I003YM/34ps0B9KeXcw6iQ4GW5xW6kxo67yLeZsykdFEj2CcQSz\niknmSlrDuwhJXssnb//4ylOXLtrFS9ovwmZP96JAmx/FNKcclvwjfpql44yZM2cp\naptzLPxi/QQrNKzGbsxEUw==\n-----END PRIVATE KEY-----\n",
+  "client_email": "bigquery-access@covid19-api-273823.iam.gserviceaccount.com",
+  "client_id": "108607045426814697762",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/bigquery-access%40covid19-api-273823.iam.gserviceaccount.com"
+}

@@ -10,5 +10,5 @@ class DatabaseConstants {
 
     final static String LATEST_DATE_QUERY_STRING = "date = (SELECT MAX(date) FROM ${DB_NAME}.${SUMMARY_TABLE})"
 
-    final static String CSV_FILE = '/tmp/country-codes.csv'
+    final static String CSV_FILE = '/opt/resources/country-codes.csv'
 }
