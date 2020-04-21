@@ -1,0 +1,28 @@
+name:
+  COVID19-API DEV BUILD
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  build_app:
+    env:
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+      APPLICATION_FILENAME: application-local.properties
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v1
+      - name: Authenticate to docker registry
+        #run: docker login docker.pkg.github.com -u $GITHUB_ACCESS_USER -p $GITHUB_ACCESS_TOKEN
+        run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+      - name: Build docker image
+        run: docker build --build-arg env_file_name=$APPLICATION_FILENAME --build-arg passphrase=$GPG_PASSPHRASE -t $DOCKER_USERNAME/$GITHUB_REPOSITORY:dev .
+        #run: docker build --build-arg env_file_name=$APPLICATION_FILENAME --build-arg github_token=$GITHUB_ACCESS_TOKEN --build-arg github_user=$GITHUB_ACCESS_USER --build-arg passphrase=$GPG_PASSPHRASE -t docker.pkg.github.com/$GITHUB_REPOSITORY:dev .
+      - name: Publish docker image
+        run: docker push $DOCKER_USERNAME/$GITHUB_REPOSITORY:dev
+        #run: docker push docker.pkg.github.com/$GITHUB_REPOSITORY:dev

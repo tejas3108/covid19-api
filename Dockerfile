@@ -1,9 +1,9 @@
 #docker build --build-arg env_file_name=application-local.properties --build-arg github_token=$GITHUB_ACCESS_TOKEN --build-arg github_user=$GITHUB_ACCESS_USER --build-arg passphrase=$GPG_PASSPHRASE -t covid19-api .
-# FOR LOCAL RUN: docker build --build-arg passphrase=$GPG_PASSPHRASE -t covid19-api .
+# FOR LOCAL BUILD: docker build --build-arg passphrase=$GPG_PASSPHRASE -t covid19-api .
 
 FROM gradle:jdk11 as builder
-ARG github_token
-ARG github_user
+#ARG github_token
+#ARG github_user
 WORKDIR /
 COPY . .
 # ENV GITHUB_ACCESS_TOKEN ${github_token}
