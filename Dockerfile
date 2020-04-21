@@ -22,7 +22,7 @@ RUN gpg --batch --output /opt/${creds_file_name}.json --passphrase "${PASSPHRASE
 
 # runtime container
 FROM gradle:jdk11
-ARG env_file_name=application-local.properties
+ARG env_file_name=application-prod.properties
 ARG creds_file_name=service_account
 ARG creds_file_loc=/opt/resources/${creds_file_name}.json
 ENV ENV_FILE_NAME ${env_file_name}

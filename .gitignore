@@ -9,8 +9,6 @@ gradlew.bat
 gradlew
 
 **/application-local.properties
-**/application-qa.properties
-**/application-prod.properties
 **/logback-spring.xml
 
 ### STS ###
