@@ -1,0 +1,8 @@
+version: '3'
+services:
+  api:
+    image: tejas3108/covid19-api
+    ports:
+      - 18001:18001
+    restart: unless-stopped
+    container_name: covid19-api

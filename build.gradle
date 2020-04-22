@@ -1,25 +1,61 @@
-plugins {
-	id 'org.springframework.boot' version '2.2.6.RELEASE'
-	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
-	id 'groovy'
+buildscript {
+	ext {
+		sprintBootVersion = "2.2.6.RELEASE"
+		springDependencyManagementVersion = "1.0.9.RELEASE"
+		gradleReleaseVersion = "2.6.0"
+		bigQueryVersion = "1.110.1"
+		modelMapperVersion = "2.3.0"
+		jodaTimeVersion = "2.10.5"
+		swaggerVersion = "2.9.2"
+	}
 }
 
-group = 'com.tejas'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
+plugins {
+	id "org.springframework.boot" version "${sprintBootVersion}"
+	id "io.spring.dependency-management" version "${springDependencyManagementVersion}"
+	id "groovy"
+	id "net.researchgate.release" version "${gradleReleaseVersion}"
+}
+
+group = "${group}"
+version = "${version}"
+sourceCompatibility = "${sourceCompatibility}"
 
 repositories {
 	mavenCentral()
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.codehaus.groovy:groovy'
-	testImplementation('org.springframework.boot:spring-boot-starter-test') {
-		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	implementation "org.springframework.boot:spring-boot-starter-web"
+	implementation "org.codehaus.groovy:groovy"
+	implementation "com.google.cloud:google-cloud-bigquery:${bigQueryVersion}"
+	implementation "org.modelmapper:modelmapper:${modelMapperVersion}"
+	implementation "joda-time:joda-time:${jodaTimeVersion}"
+	implementation "io.springfox:springfox-swagger2:${swaggerVersion}"
+	implementation "io.springfox:springfox-swagger-ui:${swaggerVersion}"
+
+
+	testImplementation("org.springframework.boot:spring-boot-starter-test") {
+		exclude group: "org.junit.vintage", module: "junit-vintage-engine"
+	}
+}
+
+release{
+	git {
+		requireBranch = 'master'
+		pushToRemote = 'origin'
+		pushToBranchPrefix = ''
+		commitVersionFileOnly = false
+		signTag = false
 	}
 }
 
 test {
 	useJUnitPlatform()
+}
+
+clean {
+	doLast {
+		project.file("${name}").delete()
+	}
 }
