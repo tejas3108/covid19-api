@@ -30,8 +30,8 @@ ENV GOOGLE_APPLICATION_CREDENTIALS ${creds_file_loc}
 WORKDIR /
 COPY --from=service_key /opt/${creds_file_name}.json /opt/resources/
 COPY --from=builder /src/main/resources/country-codes.csv /opt/resources/
-COPY --from=builder /build/libs/covid-19-api-0.0.1-SNAPSHOT.jar /jar/covid-19-api-0.0.1.jar
+COPY --from=builder /build/libs/ /jar/
 COPY --from=builder /src/main/resources/$ENV_FILE_NAME /opt/resources/
 EXPOSE 18001
 ENV JAVA_OPTS=""
-ENTRYPOINT exec java $JAVA_OPTS -Dspring.application.json="{\"app\":{\"client\":\"covid\"}}" -Dspring.profiles.active=local -Dspring.config.location=file:/opt/resources/$ENV_FILE_NAME -Djava.security.egd=file:/dev/./urandom -jar /jar/covid-19-api-0.0.1.jar
+ENTRYPOINT exec java $JAVA_OPTS -Dspring.application.json="{\"app\":{\"client\":\"covid\"}}" -Dspring.profiles.active=local -Dspring.config.location=file:/opt/resources/$ENV_FILE_NAME -Djava.security.egd=file:/dev/./urandom -jar /jar/covid19-api-*.jar

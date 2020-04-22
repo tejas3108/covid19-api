@@ -1,7 +1,7 @@
 version: '3'
 services:
   api:
-    image: covid19-api
+    image: tejas3108/covid19-api
     ports:
       - 18001:18001
     restart: unless-stopped
