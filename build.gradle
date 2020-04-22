@@ -17,9 +17,12 @@ plugins {
 	id "net.researchgate.release" version "${gradleReleaseVersion}"
 }
 
+apply plugin: 'application'
+
 group = "${group}"
 version = "${version}"
 sourceCompatibility = "${sourceCompatibility}"
+mainClassName = "com.tejas.covid19api.Covid19ApiApplication"
 
 repositories {
 	mavenCentral()
