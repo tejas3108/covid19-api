@@ -34,4 +34,5 @@ COPY --from=builder /build/libs/ /jar/
 COPY --from=builder /src/main/resources/$ENV_FILE_NAME /opt/resources/
 EXPOSE 18001
 ENV JAVA_OPTS=""
-ENTRYPOINT exec java $JAVA_OPTS -Dspring.application.json="{\"app\":{\"client\":\"covid\"}}" -Dspring.profiles.active=local -Dspring.config.location=file:/opt/resources/$ENV_FILE_NAME -Djava.security.egd=file:/dev/./urandom -jar /jar/covid19-api-*.jar
+ENTRYPOINT exec java $JAVA_OPTS -Dspring.application.json="{\"app\":{\"client\":\"covid\"}}" -Dspring.profiles.active=local -Dspring.config.location=file:/opt/resources/$ENV_FILE_NAME -Djava.security.egd=file:/dev/./urandom -jar /jar/*
+#ENTRYPOINT ["tail", "-f", "/dev/null"]
