@@ -12,6 +12,8 @@ jobs:
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+      HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      HEROKU_APP_NAME: covid19-rest-api
       APPLICATION_FILENAME: application-qa.properties
     runs-on: ubuntu-latest
     steps:
@@ -21,12 +23,18 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v1
       - name: Build docker image
-        run: docker build --build-arg env_file_name=$APPLICATION_FILENAME --build-arg passphrase=$GPG_PASSPHRASE -t tejas3108/covid19-api:${{ steps.get_version.outputs.VERSION }} -t tejas3108/covid19-api:latest .
+        run: docker build --build-arg env_file_name=$APPLICATION_FILENAME --build-arg passphrase=$GPG_PASSPHRASE -t tejas3108/covid19-api:${{ steps.get_version.outputs.VERSION }} -t tejas3108/covid19-api:latest -t registry.heroku.com/$HEROKU_APP_NAME/web .
         #run: docker build --build-arg env_file_name=$APPLICATION_FILENAME --build-arg github_token=$GITHUB_ACCESS_TOKEN --build-arg github_user=$GITHUB_ACCESS_USER --build-arg passphrase=$GPG_PASSPHRASE -t docker.pkg.github.com/$GITHUB_REPOSITORY:dev .
       - name: Publish docker image
         run: |
           docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
           docker push tejas3108/covid19-api:${{ steps.get_version.outputs.VERSION }}
           docker push tejas3108/covid19-api:latest
+
+      - name: Publish docker image to heroku
+        run: |
+          docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
+          docker push registry.heroku.com/$HEROKU_APP_NAME/web
+          heroku container:release -a $HEROKU_APP_NAME web
 
         #run: docker push docker.pkg.github.com/$GITHUB_REPOSITORY:dev
