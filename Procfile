@@ -1,1 +1,0 @@
-web: java $JAVA_OPTS -Dserver.port=$PORT -Dspring.application.json="{\"app\":{\"client\":\"covid\"}}" -Dspring.profiles.active=qa -Djava.security.egd=file:/dev/./urandom -jar build/libs/*
