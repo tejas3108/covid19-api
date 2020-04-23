@@ -30,6 +30,7 @@ class Covid19ApiApplication {
                 .ignoredParameterTypes(MetaClass.class, MetaMethod.class)
                 .groupName("COVID-19")
                 .apiInfo(metaData())
+                .pathMapping("/")
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.tejas.covid19api.api.web"))
                 .paths(PathSelectors.any())
