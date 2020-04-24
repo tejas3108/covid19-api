@@ -22,7 +22,7 @@ apply plugin: 'application'
 group = "${group}"
 version = "${version}"
 sourceCompatibility = "${sourceCompatibility}"
-mainClassName = "com.tejas.covid19api.Covid19ApiApplication"
+mainClassName = "com.tejas.covid19api.api.config.Covid19ApiApplication"
 
 repositories {
 	mavenCentral()
