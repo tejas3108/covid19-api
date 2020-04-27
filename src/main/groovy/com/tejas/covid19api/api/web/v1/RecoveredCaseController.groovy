@@ -52,12 +52,12 @@ class RecoveredCaseController {
     )
     @RequestMapping(value = "country/{countryCode}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     CaseSummaryResponseDtoV1 getTotalRecoveredByCountry(
-            @ApiParam(name = "countryCode", value = "Country Code", required = true) @PathVariable(required = true) String countryCode
+            @ApiParam(name = "countryCode", value = "Country Code (Alpha-3 Country Code Format)", required = true) @PathVariable(required = true) String countryCode
     ){
         return mapper.coreMapper.map(recoveredCaseService.getRecoveredByCountry(countryCode), CaseSummaryResponseDtoV1)
     }
 
-    @ApiOperation(value = "Get count of total recovered cases by date. Accepted format is YYYY-MM-DD")
+    @ApiOperation(value = "Get count of total recovered cases by date.")
     @ApiResponses(value = [
             @ApiResponse(code = 200, message = "Successful"),
             @ApiResponse(code = 404, message = "Member Not Found"),
@@ -67,7 +67,7 @@ class RecoveredCaseController {
     )
     @RequestMapping(value = "date/{date}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     CaseSummaryResponseDtoV1 getTotalRecoveredByDate(
-            @ApiParam(name = "date", value = "Date", required = true) @PathVariable(required = true) String date
+            @ApiParam(name = "date", value = "Date (YYYY-MM-DD Format)", required = true) @PathVariable(required = true) String date
     ){
         return mapper.coreMapper.map(recoveredCaseService.getTotalRecoveredTillDate(date), CaseSummaryResponseDtoV1)
     }
@@ -82,12 +82,12 @@ class RecoveredCaseController {
     )
     @RequestMapping(value = "country/{countryCode}/growth", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     List<CaseSummaryResponseDtoV1> getRecoveredGrowthByCountry(
-            @ApiParam(name = "countryCode", value = "Country Code", required = true) @PathVariable(required = true) String countryCode
+            @ApiParam(name = "countryCode", value = "Country Code (Alpha-3 Country Code Format)", required = true) @PathVariable(required = true) String countryCode
     ){
         return mapper.mapDomainListToDto(recoveredCaseService.getRecoveredGrowthByCountry(countryCode))
     }
 
-    @ApiOperation(value = "Get a count of total recovered cases of a country on a particular date. Accepted format is YYYY-MM-DD")
+    @ApiOperation(value = "Get a count of total recovered cases of a country on a particular date.")
     @ApiResponses(value = [
             @ApiResponse(code = 200, message = "Successful"),
             @ApiResponse(code = 404, message = "Member Not Found"),
@@ -97,8 +97,8 @@ class RecoveredCaseController {
     )
     @RequestMapping(value = "country/{countryCode}/date/{date}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     CaseSummaryResponseDtoV1 getRecoveredTillDateByCountry(
-            @ApiParam(name = "countryCode", value = "Country Code", required = true) @PathVariable(required = true) String countryCode,
-            @ApiParam(name = "date", value = "Date", required = true) @PathVariable(required = true) String date
+            @ApiParam(name = "countryCode", value = "Country Code (Alpha-3 Country Code Format)", required = true) @PathVariable(required = true) String countryCode,
+            @ApiParam(name = "date", value = "Date (YYYY-MM-DD Format)", required = true) @PathVariable(required = true) String date
     ){
         return mapper.coreMapper.map(recoveredCaseService.getRecoveredTillDateByCountry(countryCode, date), CaseSummaryResponseDtoV1)
     }
